@@ -33,13 +33,36 @@ library(ggplot2) # Package used for plotting out the the dataset
 
 ### 2. Data: Elaborate on the data used in this project with detailed description of all attributes, source of data, missing observations, etc. Describe any steps you followed to prepare the data.
 
+#### Data Description
+
+#### Data Source
+
+#### Missing observations
+
+#### Data Preparation
+
+#### Data Exploration
+
 -----
 
 ### 3. Experimental results and Analysis: Execute algorithm (plots, ACF, PACF, Spectral Analysis, hypothesis testing, etc.), discuss results with appropriate details.
 
+#### Initial Plot
+
+#### ACF
+
+#### PACF
+
 -----
 
 ### 4. Model Selection: Select final model based on selection criteria and evaluate forecasting metrics and accuracy.
+
+
+#### Final Model
+
+#### Forecasting Metrics
+
+#### Accuracy
 
 -----
 
