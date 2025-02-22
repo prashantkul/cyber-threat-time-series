@@ -44,6 +44,16 @@ Read in file from .csv
 cyber_data <- read.csv(file = "./information-2897447-supplementary/cyber_data.csv")
 ```
 
+#### Examine attributes of the data
+
+Examine attributes of data
+```{r}
+numberOfColumns <- ncol(cyber_data)
+cat(c('There are ', numberOfColumns, 'columns in the dataset'))
+numberOfObservations <- nrow(cyber_data)
+cat(c('There are', numberOfObservations, 'observations in the dataset'))
+```
+
 #### Missing observations
 
 Generate a table which print out the following structure
