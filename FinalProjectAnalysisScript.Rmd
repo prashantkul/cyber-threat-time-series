@@ -27,6 +27,24 @@ library(ggplot2) # Package used for plotting out the the dataset
 
 -----
 
+### 1. Introduction: Includes problem statement and objective of your project.
+
+-----
+
+### 2. Data: Elaborate on the data used in this project with detailed description of all attributes, source of data, missing observations, etc. Describe any steps you followed to prepare the data.
+
+-----
+
+### 3. Experimental results and Analysis: Execute algorithm (plots, ACF, PACF, Spectral Analysis, hypothesis testing, etc.), discuss results with appropriate details.
+
+-----
+
+### 4. Model Selection: Select final model based on selection criteria and evaluate forecasting metrics and accuracy.
+
+-----
+
+### 5. Conclusion and Future work: Summarize your work and draw specific conclusions from the overall final project. Describe next steps to continue working on this project. (i.e., how the model forecasting can be improved)
+
 -----
 
 ### Cleanup task
