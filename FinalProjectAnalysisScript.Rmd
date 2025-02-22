@@ -1,0 +1,29 @@
+---
+title: "FinalProjectAnalysisScript"
+author: "Dun Fletcher Lin"
+date: "2025-02-22"
+output: html_document
+---
+
+### Import libraries
+
+```{r}
+library(graphics)
+
+library(utils)
+
+library(stats)
+
+library(forecast)
+```
+
+-----
+
+-----
+
+### Cleanup task
+
+Cleanup the variables that are defined in the environment
+```{r}
+rm(list = ls())
+```
