@@ -8,13 +8,21 @@ output: html_document
 ### Import libraries
 
 ```{r}
+library(printr) # Package used for printing out the documentation of function in the output
+
+library(grDevices) # Package used for plotting out time series
+
+library(tseries) # Package for Time series analysis and computational finance
+
 library(graphics)
 
 library(utils)
 
-library(stats)
+library(stats) # Package used for statistical calculations and random number generations
 
-library(forecast)
+library(forecast) # Package used for functions that could be used for creating forecast including seasonality plot
+
+library(ggplot2) # Package used for plotting out the the dataset
 ```
 
 -----
