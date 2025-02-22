@@ -46,6 +46,39 @@ cyber_data <- read.csv(file = "./information-2897447-supplementary/cyber_data.cs
 
 #### Missing observations
 
+Generate a table which print out the following structure
+columnName, hasNA, numberOfNA
+```{r}
+maximumLengthOfColumnName <- max(nchar(names(cyber_data)))
+
+cat("******************\n")
+cat("Summary table for missing observations: \n")
+cat(c("columnName", strrep(' ', maximumLengthOfColumnName - 10), '| hasNA', ' | numberOfNA\n'))
+for (column in colnames(cyber_data)) {
+  hasNA <- sum(is.na(cyber_data[column])) > 0
+  numberOfNA <- sum(is.na(cyber_data[column]))
+  if (hasNA) {
+    cat(c(column, 
+          strrep(' ', maximumLengthOfColumnName - nchar(column) + 2), 
+          paste('|', hasNA), 
+          '   | ', 
+          numberOfNA, 
+          '\n'), 
+        sep = '')
+  }
+  else {
+    cat(c(column, 
+          strrep(' ', maximumLengthOfColumnName - nchar(column) + 2), 
+          paste('|', hasNA), 
+          '  | ', 
+          numberOfNA, 
+          '\n'), 
+        sep = '')
+  }
+}
+cat("******************")
+```
+
 #### Data Preparation
 
 #### Data Exploration
