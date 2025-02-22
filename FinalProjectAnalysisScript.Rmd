@@ -37,6 +37,13 @@ library(ggplot2) # Package used for plotting out the the dataset
 
 #### Data Source
 
+#### Load in data
+
+Read in file from .csv
+```{r}
+cyber_data <- read.csv(file = "./information-2897447-supplementary/cyber_data.csv")
+```
+
 #### Missing observations
 
 #### Data Preparation
