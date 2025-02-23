@@ -237,6 +237,8 @@ country_count <- cyber_data %>%
 country_count
 ```
 
+Note that there are uneven number of observations per each country across the time period examined. So I need to perform some selection/aggregation/data generation/filtering in order to have an observation that is consistently recorded per day.
+
 Examine number of count for each date
 ```{r}
 date_count <- cyber_data %>%
@@ -245,6 +247,8 @@ date_count <- cyber_data %>%
 
 date_count
 ```
+
+Again, note that there are uneven number of observations per each day across the time period examined. So I need to perform some selection/aggregation/data generation/filtering in order to have an observation that is consistently recorded per day. Count of 1 refer to the days where the original dataset has no observations. 
 
 -----
 
