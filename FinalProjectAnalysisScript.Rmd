@@ -188,7 +188,28 @@ tryCatch({
 })
 ```
 
+Fill in values base on existing value
+```{r}
+# Replace NA in column ConvertedAttackTime with a constant value of the column 06:00
+cyber_data$ConvertedAttackTime[is.na(cyber_data$ConvertedAttackTime)] <- "06:00"
 
+# Replace NA in column AttackDate with the value from ConvertedAttackDate
+# Define a function to apply the transformation only if AttackDate is NA
+transform_datetime <- function(date_str_column, datetime_column) {
+  if (!is.na(datetime_column)) {
+    return(datetime_column)  # Return the existing value if datetime_column is not NA
+  } else if (is.na(date_str_column)) {
+    return(NA)  # Return NA if the date string is missing
+  } else {
+    datetime_str <- paste(date_str_column, "00:00:00")  # Add the time "00:00:00"
+    datetime_obj <- as.POSIXct(datetime_str, format="%Y-%m-%d %H:%M:%S", tz="America/Los_Angeles")
+    return(as.character(datetime_obj))  # Return the formatted datetime as a string
+  }
+}
+
+# Apply the transformation to the AttackDate based on the ConvertedAttackDate
+cyber_data$AttackDate <- mapply(transform_datetime, cyber_data$ConvertedAttackDate, cyber_data$AttackDate)
+```
 
 -----
 
