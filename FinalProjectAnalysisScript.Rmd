@@ -8,6 +8,8 @@ output: html_document
 ### Import libraries
 
 ```{r}
+library(dplyr) # A fast, consistent tool for working with data frame like objects, both in memory and out of memory.
+
 library(printr) # Package used for printing out the documentation of function in the output
 
 library(grDevices) # Package used for plotting out time series
@@ -49,7 +51,7 @@ cyber_data <- read.csv(file = "./information-2897447-supplementary/cyber_data.cs
 Examine attributes of data
 ```{r}
 numberOfColumns <- ncol(cyber_data)
-cat(c('There are ', numberOfColumns, 'columns in the dataset'))
+cat(c('There are ', numberOfColumns, 'columns in the dataset\n'))
 numberOfObservations <- nrow(cyber_data)
 cat(c('There are', numberOfObservations, 'observations in the dataset'))
 ```
@@ -219,6 +221,29 @@ tryCatch({
 }, error = function(e) {
   cat("Error:", e$message, "\n")
 })
+```
+
+Define expected number of observations for the time period that is examined
+```{r}
+expectedNumberOfObservations <- length(unique(cyber_data$ConvertedAttackDate))
+```
+
+Examine number of count for each country
+```{r}
+country_count <- cyber_data %>%
+  group_by(Country, .drop = FALSE) %>%  # .drop = FALSE keeps NA values
+  summarise(count = n(), .groups = "drop")
+
+country_count
+```
+
+Examine number of count for each date
+```{r}
+date_count <- cyber_data %>%
+  group_by(ConvertedAttackDate, .drop = FALSE) %>%  # .drop = FALSE keeps NA values
+  summarise(count = n(), .groups = "drop")
+
+date_count
 ```
 
 -----
