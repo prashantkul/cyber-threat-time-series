@@ -291,6 +291,31 @@ Examine if Box Cox transformation is needed for the time series object
 BoxCox.lambda(test)
 ```
 
+
+Fit a ARIMA model on time series object without differencing or seasonal effect
+```{r}
+auto.arima(test, seasonal = FALSE)
+```
+
+Fit a ARIMA model on time series object without differencing
+```{r}
+auto.arima(test)
+```
+
+Fit a ARIMA model on differenced time series object and no seasonal effect
+```{r}
+auto.arima(diff(test), seasonal = FALSE)
+```
+
+Fit a ARIMA model on differened time series object
+```{r}
+auto.arima(diff(test))
+```
+
+Fit a exponential smoothing state space model
+```{r}
+ets(test)
+```
 -----
 
 ### 4. Model Selection: Select final model based on selection criteria and evaluate forecasting metrics and accuracy.
