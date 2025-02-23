@@ -256,9 +256,26 @@ Again, note that there are uneven number of observations per each day across the
 
 #### Initial Plot
 
+Select out one of the country where the data is 'complete' to model
+```{r}
+test <- ts(cyber_data$Local.Infection[cyber_data$Country == "United States of America"],
+           start = c(as.numeric(format(min_date, "%Y")), as.numeric(format(min_date, "%j"))),
+           frequency = 365)
+```
+
+Plot out the time series dataset
+```{r}
+plot(test)
+```
+
 #### ACF
 
 #### PACF
+
+Examine the ACF and PACF plot
+```{r}
+tsdisplay(test)
+```
 
 -----
 
