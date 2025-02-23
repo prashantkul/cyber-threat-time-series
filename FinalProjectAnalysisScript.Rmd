@@ -172,7 +172,7 @@ new_rows <- sapply(cyber_data, function(x) {
 
 # Convert the result to a data frame and set the column names
 new_rows <- as.data.frame(new_rows)
-colnames(new_rows) <- colnames(new_rows)
+colnames(new_rows) <- colnames(cyber_data)
 
 # Use rbind to add the new row
 cyber_data <- rbind(cyber_data, new_rows)
@@ -181,7 +181,7 @@ cyber_data <- rbind(cyber_data, new_rows)
 Sanity check work performed
 ```{r}
 tryCatch({
-  if ((max_date - min_date) != length(unique(cyber_data$ConvertedAttackDate)))
+  if ((max_date - min_date + 1) != length(unique(cyber_data$ConvertedAttackDate)))
       stop("Data generation created unexpected outcome")
 }, error = function(e) {
   cat("Error:", e$message, "\n")
