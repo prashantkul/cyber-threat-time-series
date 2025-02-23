@@ -211,6 +211,16 @@ transform_datetime <- function(date_str_column, datetime_column) {
 cyber_data$AttackDate <- mapply(transform_datetime, cyber_data$ConvertedAttackDate, cyber_data$AttackDate)
 ```
 
+Sanity check work performed
+```{r}
+tryCatch({
+  if (sum(is.na(cyber_data$ConvertedAttackTime)) != 0 | sum(is.na(cyber_data$AttackDate)) != 0)
+      stop("Data fill in created unexpected outcome")
+}, error = function(e) {
+  cat("Error:", e$message, "\n")
+})
+```
+
 -----
 
 ### 3. Experimental results and Analysis: Execute algorithm (plots, ACF, PACF, Spectral Analysis, hypothesis testing, etc.), discuss results with appropriate details.
