@@ -91,7 +91,38 @@ cat("******************")
 
 #### Data Preparation
 
+Convert `AttackDate` to be a date time column
+```{r}
+cyber_data$ConvertedAttackDateTime <- as.POSIXct(cyber_data$AttackDate, format = "%d/%m/%Y %H:%M")
+```
+
+Re-code `ConvertedAttackDateTime` time as original recording time should be 6:00 a.m. every morning
+```{r}
+cyber_data$ConvertedAttackDateTime <- as.POSIXct(format(cyber_data$ConvertedAttackDateTime, "%Y-%m-%d 06:00:00"))
+```
+
+Separate `ConvertedAttackDateTime` to be 2 columns: ConvertedAttackDate, ConvertedAttackTime
+```{r}
+cyber_data$ConvertedAttackDate <- as.Date(cyber_data$ConvertedAttackDateTime)
+
+cyber_data$ConvertedAttackTime <- format(cyber_data$ConvertedAttackDateTime, format = "%H:%M")
+```
+
+Create dummy code for the `Country` column 
+```{r}
+# Perform dummy coding
+dummy_coded_country <- model.matrix(~ Country - 1, cyber_data)
+
+# Convert the dummy-coded matrix to a dataframe
+dummy_coded_country_df <- as.data.frame(dummy_coded_country)
+
+# Add the dummy-coded columns back to the original dataframe
+cyber_data <- cbind(cyber_data, dummy_coded_country_df)
+```
+
 #### Data Exploration
+
+
 
 -----
 
