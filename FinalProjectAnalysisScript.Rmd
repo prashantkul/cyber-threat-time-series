@@ -136,6 +136,43 @@ cat(c('The frequency of reading is ', frequency_of_reading, '\n'))
 
 Since the frequency of reading does not equal to 1 exactly, that means that there are particular days in which data record was omitted or missed. For simplicity and completeness sake, I will go ahead and create entries for those days with NA values to the original dataset.
 
+Identify the missing dates
+```{r}
+all_dates <- seq(min_date, max_date, by = "day")
+missing_dates <- all_dates[!all_dates %in% unique(cyber_data$ConvertedAttackDate)]
+print(missing_dates)
+```
+
+Add in rows of data for missing dates
+```{r}
+cat(c('Creating', length(missing_dates), 'date record for simplicity and completeness'))
+
+# Add the time part and convert each date string to POSIXct with PDT timezone
+missing_datetime_list <- sapply(missing_dates, function(date_str) {
+  datetime_str <- paste(date_str, "06:00:00") # Force the time for the rows to be 06:00
+  datetime_obj <- as.POSIXct(datetime_str, format="%Y-%m-%d %H:%M:%S", tz="America/Los_Angeles")
+  formatted_datetime <- format(datetime_obj, "%Y-%m-%d %H:%M:%S %Z")
+  return(formatted_datetime)
+})
+
+# New row with only column A having a value
+new_rows <- sapply(cyber_data, function(x) {
+  if (inherits(x, "POSIXct")) {
+    missing_datetime_list  # Replace with the desired value for column ConvertedAttackDateTime
+  } else if (class(x) == "Date") {
+    missing_dates
+  } else {
+    NA  # For other columns (numeric, logical, etc.), fill with NA
+  }
+})
+
+# Convert the result to a data frame and set the column names
+new_rows <- as.data.frame(new_rows)
+colnames(new_rows) <- colnames(new_rows)
+
+# Use rbind to add the new row
+cyber_data <- rbind(cyber_data, new_rows)
+```
 
 
 
