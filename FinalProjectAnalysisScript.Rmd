@@ -276,6 +276,20 @@ Examine the ACF and PACF plot
 ```{r}
 tsdisplay(test)
 ```
+Examine the stationarity of the time series object
+```{r}
+kpss.test(test)
+```
+
+Apply differencing and re-examine the stationarity of the time series object
+```{r}
+kpss.test(diff(test))
+```
+
+Examine if Box Cox transformation is needed for the time series object
+```{r}
+BoxCox.lambda(test)
+```
 
 -----
 
