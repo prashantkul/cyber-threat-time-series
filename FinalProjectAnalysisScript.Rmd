@@ -130,8 +130,12 @@ cat(c('The initial date examined is', as.character(min_date), '\n'))
 max_date <- max(cyber_data$ConvertedAttackDate)
 cat(c('The final date examined is', as.character(max_date), '\n'))
 
-frequency_of_reading <- (max_date - min_date) / length(unique(cyber_data$ConvertedAttackDate))
-cat(c('The frequency of reading is ', frequency_of_reading, '\n'))
+frequency_of_reading <- (max_date - min_date + 1) / length(unique(cyber_data$ConvertedAttackDate))
+cat(c('The frequency of reading is ', 
+      frequency_of_reading, 
+      ifelse(frequency_of_reading == 1, 
+             'Day', 'Days'), 
+      '\n'))
 ```
 
 Since the frequency of reading does not equal to 1 exactly, that means that there are particular days in which data record was omitted or missed. For simplicity and completeness sake, I will go ahead and create entries for those days with NA values to the original dataset.
