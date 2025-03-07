@@ -359,7 +359,11 @@ ggplot(date_count_long, aes(x = ConvertedAttackDate, y = Count, color = AttackTy
     # Y-axis label font size
     axis.title.y = element_text(size = 20),
     # Y-axis tick label font size
-    axis.text.y = element_text(size = 14)
+    axis.text.y = element_text(size = 14),
+    # Size of legend title
+    legend.title = element_text(size = 20),
+    # Size of legend labels
+    legend.text = element_text(size = 15),
   ) 
 ```
 
