@@ -537,6 +537,18 @@ for (colNames in colnames(cyber_data)[3:10]) {
   
   # Display the main plot
   print(main_plot)
+  
+  # Save each one of the variable scatter plot
+  ggsave(
+    filename = paste0(colNames, "ScatterPlotAcrossCountry.png"),
+    path = "./plots/",
+    plot = main_plot,
+    width = 40,
+    height = 20,
+    dpi = 320,
+    create.dir = TRUE
+  )
+
 }
 ```
 
