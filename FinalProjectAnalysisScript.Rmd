@@ -252,6 +252,25 @@ date_count
 
 Again, note that there are uneven number of observations per each day across the time period examined. So I need to perform some selection/aggregation/data generation/filtering in order to have an observation that is consistently recorded per day. Count of 1 refer to the days where the original dataset has no observations. 
 
+Create scatter plot of each of the column in the dataset
+```{r}
+for (colNames in colnames(cyber_data)[3:10]) {
+  par(mar = c(10, 10, 10, 10))    # Larger margins
+  
+  plot(
+    x = cyber_data$ConvertedAttackDate,
+    y = cyber_data[,  colNames],
+    main = paste0("Scatter Plot of ", colNames),
+    xlab = "Time (in months)",
+    ylab = "Percentage value of \nattack types",
+    pch = 1,
+    cex = 0.2,
+    col = "red"
+  )
+}
+```
+
+
 -----
 
 ### 3. Experimental results and Analysis: Execute algorithm (plots, ACF, PACF, Spectral Analysis, hypothesis testing, etc.), discuss results with appropriate details.
