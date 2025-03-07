@@ -500,7 +500,7 @@ for (colNames in colnames(cyber_data)[3:10]) {
                  date_labels = "%Y/%m") +                # Format labels as yyyy/mm
     geom_point(na.rm = TRUE,
                alpha = 0.5,
-               size = 0.5)  +
+               size = 5)  +
     theme_minimal() +
     labs(
       title = paste("Scatter Plot of", colNames, "per Country Group"),
