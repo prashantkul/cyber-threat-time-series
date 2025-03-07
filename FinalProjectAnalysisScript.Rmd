@@ -254,6 +254,19 @@ ggplot(country_count, aes(x = reorder(Country, -count), y = count)) +
        title = "Bar Plot of Number of Observations per Country")
 ```
 
+Export to file
+```{r}
+# Save plot
+ggsave(
+  filename = "NumberOfObservationsPerCountry.png",
+  path = "./plots/",
+  width = 40,
+  height = 20,
+  dpi = 320,
+  create.dir = TRUE
+)
+```
+
 Examine number of count for each date
 ```{r}
 date_count <- cyber_data %>%
