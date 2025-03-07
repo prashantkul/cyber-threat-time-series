@@ -271,7 +271,7 @@ Export to file
 ```{r}
 # Save plot
 ggsave(
-  filename = "NumberOfObservationsPerCountry.png",
+  filename = "NumberOfObservationsPerCountry.jpeg",
   path = "./plots/",
   width = 40,
   height = 20,
@@ -327,7 +327,7 @@ Export to file
 ```{r}
 # Save plot
 ggsave(
-  filename = "NumberOfObservationsPerDate.png",
+  filename = "NumberOfObservationsPerDate.jpeg",
   path = "./plots/",
   width = 40,
   height = 20,
