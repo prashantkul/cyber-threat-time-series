@@ -234,7 +234,11 @@ Examine number of count for each country
 ```{r}
 country_count <- cyber_data %>%
   group_by(Country, .drop = FALSE) %>%  # .drop = FALSE keeps NA values
-  summarise(count = n(), .groups = "drop")
+  summarise(across(colnames(cyber_data)[3:10],
+                   list(
+                     non_na = ~ sum(!is.na(.)),  # Count non-NA values
+                     na = ~ sum(is.na(.))        # Count NA values
+                   ), .names = "count_{col}_{fn}"))
 
 country_count
 ```
