@@ -509,12 +509,34 @@ for (colNames in colnames(cyber_data)[3:10]) {
     ) +
     guides(color = guide_legend(ncol = 7, nrow = 30)) +
     theme(
+      # Title font size
+      plot.title = element_text(size = 30),
+      
+      # Change font size of facet labels
+      strip.text = element_text(size = 16),
+      
+      # X-axis label font size
+      axis.title.x = element_text(size = 20),
+      # Y-axis label font size
+      axis.title.y = element_text(size = 20),
+      
+      # Y-axis tick label font size
+      axis.text.y = element_text(size = 14),
+      # Rotate labels
+      axis.text.x = element_text(
+        angle = 45,
+        hjust = 1,
+        size = 14
+      ),
+      
+      # Size of legend title
+      legend.title = element_text(size = 20),
+      # Size of legend labels
+      legend.text = element_text(size = 15),
       # Put legend at bottom to be extracted
       legend.position = "bottom",
       # Size of legend keys
       legend.key.size = unit(0.2, "lines"),
-      # Size of legend labels
-      legend.text = element_text(size = 6),
       # Spacing between legend items
       legend.spacing = unit(0.1, "cm"),
       # Margin around the legend
@@ -523,8 +545,6 @@ for (colNames in colnames(cyber_data)[3:10]) {
       legend.box.spacing = unit(0.1, "cm"),
       # Arrange legend items vertically
       legend.direction = "vertical",
-      # Rotate labels
-      axis.text.x = element_text(angle = 45, hjust = 1)
     )
   
   # Extract the legend only once
