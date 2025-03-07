@@ -245,12 +245,25 @@ Create visualization showing the phenomena
 ```{r}
 par(mar = c(20, 20, 20, 20))    # Larger margins
 
-ggplot(country_count, aes(x = reorder(Country, -count), y = count)) +
+ggplot(country_count, aes(x = reorder(Country,-count), y = count)) +
   geom_bar(stat = "identity", fill = "steelblue") +
   scale_x_discrete(expand = expansion(mult = 0.01)) +  # Optional: Add slight expansion for better spacing
-  theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
-  labs(x = "Countries", 
-       y = "Count of Observations", 
+  theme(
+    axis.text.x = element_text(
+      angle = 90,
+      hjust = 1,
+      size = 14
+    ),
+    plot.title = element_text(size = 30),
+    # Title font size
+    axis.title.x = element_text(size = 20),
+    # X-axis label font size
+    axis.title.y = element_text(size = 20),
+    # Y-axis label font size
+    axis.text.y = element_text(size = 14)          # Y-axis tick label font size
+  ) +
+  labs(x = "Countries",
+       y = "Count of Observations",
        title = "Bar Plot of Number of Observations per Country")
 ```
 
