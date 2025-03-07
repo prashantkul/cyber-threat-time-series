@@ -267,6 +267,14 @@ for (colNames in colnames(cyber_data)[3:10]) {
     cex = 0.2,
     col = "red"
   )
+  
+  # Capture the plot
+  scatter_plot <- recordPlot()
+
+  # Export the plot to a file
+  jpeg(paste0("./plots/", colNames, "ScatterPlot.jpeg"), width = 800, height = 600, quality = 100)
+  replayPlot(scatter_plot)  # Replay the captured plot
+  dev.off()
 }
 ```
 
