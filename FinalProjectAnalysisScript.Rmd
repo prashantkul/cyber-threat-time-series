@@ -552,6 +552,17 @@ for (colNames in colnames(cyber_data)[3:10]) {
 
 dev.new()         # Open a new graphics device for the legend
 grid.draw(legend_plot)  # Display the legend in a separate window
+
+# Save the legend plot once
+ggsave(
+  filename = "CountryLegend.png",
+  path = "../plots/",
+  plot = legend_plot,
+  width = 40,
+  height = 20,
+  dpi = 320,
+  create.dir = TRUE
+)
 ```
 
 -----
