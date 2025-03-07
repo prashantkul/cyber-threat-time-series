@@ -548,8 +548,10 @@ for (colNames in colnames(cyber_data)[3:10]) {
     dpi = 320,
     create.dir = TRUE
   )
-
 }
+
+dev.new()         # Open a new graphics device for the legend
+grid.draw(legend_plot)  # Display the legend in a separate window
 ```
 
 -----
