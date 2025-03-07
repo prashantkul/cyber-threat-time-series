@@ -95,12 +95,12 @@ cat("******************")
 
 Convert `AttackDate` to be a date time column
 ```{r}
-cyber_data$ConvertedAttackDateTime <- as.POSIXct(cyber_data$AttackDate, format = "%d/%m/%Y %H:%M")
+cyber_data$ConvertedAttackDateTime <- as.POSIXct(cyber_data$AttackDate, format = "%d/%m/%Y %H:%M", tz = "UTC")
 ```
 
 Re-code `ConvertedAttackDateTime` time as original recording time should be 6:00 a.m. every morning
 ```{r}
-cyber_data$ConvertedAttackDateTime <- as.POSIXct(format(cyber_data$ConvertedAttackDateTime, "%Y-%m-%d 06:00:00"))
+cyber_data$ConvertedAttackDateTime <- as.POSIXct(format(cyber_data$ConvertedAttackDateTime, "%Y-%m-%d 06:00:00"), tz = "UTC")
 ```
 
 Separate `ConvertedAttackDateTime` to be 2 columns: ConvertedAttackDate, ConvertedAttackTime
