@@ -470,6 +470,75 @@ for (colNames in colnames(cyber_data)[3:10]) {
 }
 ```
 
+Limit the country interested to be particular ones since having too little data points for particular country may yield biased and unreliable result. Selecting the threshold of minimum data point required to be consider as 350. 
+
+Create scatter plot of each of the column in the dataset across countries
+```{r}
+library(grid)
+library(gridExtra)
+
+# Subset the data base on Country once
+filtered_data <- cyber_data[cyber_data$Country %in% country_count$Country[country_count$count > 350], ]
+
+# Extract the legend from the main plot
+get_legend <- function(plot) {
+  tmp <- ggplot_gtable(ggplot_build(plot))
+  leg <- which(sapply(tmp$grobs, function(x) x$name) == "guide-box")
+  legend <- tmp$grobs[[leg]]
+  return(legend)
+}
+
+for (colNames in colnames(cyber_data)[3:10]) {
+  par(mar = c(10, 10, 10, 10))    # Larger margins
+  
+  # Create a scatter plot with color-coded points
+  main_plot <- ggplot(filtered_data,
+                      aes(x = ConvertedAttackDate,
+                          y = .data[[colNames]],   # Use .data[[y_column]] for dynamic column names
+                          color = Country)) +
+    scale_x_date(date_breaks = "1 month",          # Break x-axis by 1 month
+                 date_labels = "%Y/%m") +                # Format labels as yyyy/mm
+    geom_point(na.rm = TRUE,
+               alpha = 0.5,
+               size = 0.5)  +
+    theme_minimal() +
+    labs(
+      title = paste("Scatter Plot of", colNames, "per Country Group"),
+      x = "Time (in months)",
+      y = paste("Percentage value of attack types:", colNames)
+    ) +
+    guides(color = guide_legend(ncol = 7, nrow = 30)) +
+    theme(
+      # Put legend at bottom to be extracted
+      legend.position = "bottom",
+      # Size of legend keys
+      legend.key.size = unit(0.2, "lines"),
+      # Size of legend labels
+      legend.text = element_text(size = 6),
+      # Spacing between legend items
+      legend.spacing = unit(0.1, "cm"),
+      # Margin around the legend
+      legend.margin = margin(0, 0, 0, 0),
+      # Spacing between legend and plot
+      legend.box.spacing = unit(0.1, "cm"),
+      # Arrange legend items vertically
+      legend.direction = "vertical",
+      # Rotate labels
+      axis.text.x = element_text(angle = 45, hjust = 1)
+    )
+  
+  # Extract the legend only once
+  if (!exists("legend_plot")) {
+    legend_plot <- get_legend(main_plot)
+  }
+  
+  # Hide the legend in the main plot
+  main_plot <- main_plot + theme(legend.position = "none")
+  
+  # Display the main plot
+  print(main_plot)
+}
+```
 
 -----
 
