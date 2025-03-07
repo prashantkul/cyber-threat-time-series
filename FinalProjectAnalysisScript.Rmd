@@ -363,6 +363,19 @@ ggplot(date_count_long, aes(x = ConvertedAttackDate, y = Count, color = AttackTy
   ) 
 ```
 
+Export to file
+```{r}
+# Save plot
+ggsave(
+  filename = "NumberOfObservationsPerDatePerAttackType.jpeg",
+  path = "./plots/",
+  width = 40,
+  height = 20,
+  dpi = 320,
+  create.dir = TRUE
+)
+```
+
 ```{r}
 par(mar = c(20, 20, 20, 20))    # Larger margins
 
