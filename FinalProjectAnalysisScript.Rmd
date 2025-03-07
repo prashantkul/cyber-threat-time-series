@@ -281,11 +281,15 @@ ggsave(
 )
 ```
 
-Examine number of count for each date
+Examine number of NA/non-NA count for each date
 ```{r}
 date_count <- cyber_data %>%
   group_by(ConvertedAttackDate, .drop = FALSE) %>%  # .drop = FALSE keeps NA values
-  summarise(count = n(), .groups = "drop")
+  summarise(across(colnames(cyber_data)[3:10],
+                   list(
+                     non_na = ~ sum(!is.na(.)),  # Count non-NA values
+                     na = ~ sum(is.na(.))        # Count NA values
+                   ), .names = "count_{col}_{fn}"))
 
 date_count
 ```
