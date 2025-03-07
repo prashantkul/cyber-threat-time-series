@@ -329,7 +329,7 @@ Create overall visualization showing the phenomena across columns
 ```{r}
 ggplot(date_count_long, aes(x = ConvertedAttackDate, y = Count, color = AttackType, group = AttackType)) +
   scale_x_date(
-    # Format labels as abbreviated month names (e.g., Jan, Feb)
+    # Format labels as yyyy/mm
     date_labels = "%Y/%m",
     date_breaks = "1 month",
     # Break x-axis by 1 month
