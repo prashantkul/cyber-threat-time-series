@@ -296,11 +296,31 @@ par(mar = c(20, 20, 20, 20))    # Larger margins
 # Create time series line plot
 ggplot(date_count, aes(x = ConvertedAttackDate, y = count)) +
   geom_line(color = "steelblue", size = 1) +  # Line plot
-  geom_point(color = "darkblue", size = 0.75) +  # Add points for clarity
-  scale_x_date(date_labels = "%Y-%m", date_breaks = "1 month") +  # Format x-axis
+  geom_point(color = "darkblue", size = 2) +  # Add points for clarity
+  scale_x_date(
+    # Format labels as abbreviated month names (e.g., Jan, Feb)
+    date_labels = "%Y/%m",
+    date_breaks = "1 month",
+    # Break x-axis by 1 month
+    expand = expansion(mult = 0.01)
+  ) +
   labs(x = "Date (in days)", y = "Number of Observations", title = "Number of Observations Per Daily collection") +
   theme_minimal() +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1))  # Rotate x-axis labels
+  theme(
+    axis.text.x = element_text(
+      angle = 45,
+      hjust = 1,
+      size = 14
+    ),
+    # Title font size
+    plot.title = element_text(size = 30),
+    # X-axis label font size
+    axis.title.x = element_text(size = 20),
+    # Y-axis label font size
+    axis.title.y = element_text(size = 20),
+    # Y-axis tick label font size
+    axis.text.y = element_text(size = 14)
+  ) 
 ```
 
 Export to file
