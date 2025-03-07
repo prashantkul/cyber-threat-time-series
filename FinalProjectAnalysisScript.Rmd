@@ -294,7 +294,37 @@ date_count <- cyber_data %>%
 date_count
 ```
 
-Create visualization showing the phenomena 
+Perform data transformation converting table from wide to long format
+```{r}
+library(tidyr)
+library(stringr)
+
+# Assuming 'date_count' is the grouped and summarized data
+date_count_long <- date_count %>%
+  pivot_longer(
+    # Select columns starting with 'count_'
+    cols = starts_with("count_"),
+    # Split column names into two variables
+    names_to = c("AttackType", "IsNA"),
+    # Use regex to extract 'AttackType' and 'IsNA'
+    names_pattern = "count_(.*)_(.*)",
+    # New column for the counts
+    values_to = "Count"  
+  ) %>%
+  separate(
+    AttackType,
+    into = c("AttackType", "Part_IsNA"),
+    sep = "_",
+    fill = "right",
+    remove = FALSE
+  ) %>%
+  mutate(IsNA = ifelse(is.na(Part_IsNA), IsNA, paste(Part_IsNA, IsNA, sep = "_"))) %>% # Append to existing 'IsNA'
+  select(-Part_IsNA)  # Remove temporary columns
+
+# View the reshaped data
+print(date_count_long)
+```
+
 ```{r}
 par(mar = c(20, 20, 20, 20))    # Larger margins
 
