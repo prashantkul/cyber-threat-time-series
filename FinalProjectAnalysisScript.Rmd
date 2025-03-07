@@ -289,6 +289,33 @@ date_count <- cyber_data %>%
 date_count
 ```
 
+Create visualization showing the phenomena 
+```{r}
+par(mar = c(20, 20, 20, 20))    # Larger margins
+
+# Create time series line plot
+ggplot(date_count, aes(x = ConvertedAttackDate, y = count)) +
+  geom_line(color = "steelblue", size = 1) +  # Line plot
+  geom_point(color = "darkblue", size = 0.75) +  # Add points for clarity
+  scale_x_date(date_labels = "%Y-%m", date_breaks = "1 month") +  # Format x-axis
+  labs(x = "Date (in days)", y = "Number of Observations", title = "Number of Observations Per Daily collection") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))  # Rotate x-axis labels
+```
+
+Export to file
+```{r}
+# Save plot
+ggsave(
+  filename = "NumberOfObservationsPerDate.png",
+  path = "./plots/",
+  width = 40,
+  height = 20,
+  dpi = 320,
+  create.dir = TRUE
+)
+```
+
 Again, note that there are uneven number of observations per each day across the time period examined. So I need to perform some selection/aggregation/data generation/filtering in order to have an observation that is consistently recorded per day. Count of 1 refer to the days where the original dataset has no observations. 
 
 Create scatter plot of each of the column in the dataset
