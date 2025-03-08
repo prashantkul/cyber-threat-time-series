@@ -797,6 +797,103 @@ specified_time_series <-
   )
 ```
 
+Plot out the original time series
+```{r}
+plot(specified_time_series)
+```
+
+As seen in the graph, there are missing points for some dates where the line become disjointed.
+
+Perform imputation to have complete data across the time period
+```{r}
+library(zoo)
+plot(na.approx(specified_time_series))
+```
+
+Examine Seasonality plot
+```{r}
+ggseasonplot(specified_time_series,
+             main = "Seasonal plot of the aggregated dataset")
+```
+
+Examine Seasonality plot of imputed value dataset
+```{r}
+ggseasonplot(na.approx(specified_time_series),
+             main = "Seasonal plot of the aggregated value imputed dataset")
+```
+
+Examine the ACF and PACF plot
+```{r}
+tsdisplay(specified_time_series)
+```
+
+Examine the ACF and PACF plot
+```{r}
+tsdisplay(na.approx(specified_time_series))
+```
+
+Examine the stationarity of the time series object
+```{r}
+kpss.test(specified_time_series)
+```
+
+Examine the stationarity of the time series object
+```{r}
+kpss.test(na.approx(specified_time_series))
+```
+
+Apply differencing and re-examine the stationarity of the time series object
+```{r}
+kpss.test(diff(na.approx(specified_time_series)))
+```
+
+Examine if Box Cox transformation is needed for the time series object
+```{r}
+BoxCox.lambda(specified_time_series)
+```
+
+Examine if Box Cox transformation is needed for the time series object
+```{r}
+BoxCox.lambda(na.approx(specified_time_series))
+```
+
+Apply differencing and re-examine the stationarity of the time series object
+```{r}
+kpss.test(diff(na.approx(specified_time_series), differences = 2))
+```
+
+Fit a ARIMA model on time series object without differencing or seasonal effect
+```{r}
+auto.arima(specified_time_series, seasonal = FALSE)
+```
+
+Fit a ARIMA model on time series object without differencing
+```{r}
+auto.arima(specified_time_series)
+```
+
+Fit a ARIMA model on differenced time series object and no seasonal effect
+```{r}
+auto.arima(diff(specified_time_series), seasonal = FALSE)
+```
+
+Fit a ARIMA model on differened time series object
+```{r}
+auto.arima(diff(specified_time_series))
+```
+
+Fit a exponential smoothing state space model
+```{r}
+ets(specified_time_series)
+```
+
+Fit a exponential smoothing state space model
+```{r}
+ets(na.approx(specified_time_series))
+```
+
+-----
+
 Select out one of the country where the data is 'complete' to model
 ```{r}
 test <- ts(cyber_data$Local.Infection[cyber_data$Country == "United States of America"],
