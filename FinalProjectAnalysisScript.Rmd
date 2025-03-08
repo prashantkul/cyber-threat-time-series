@@ -531,10 +531,31 @@ for (colNames in colnames(cyber_data)[3:10]) {
 
 Limit the country interested to be particular ones since having too little data points for particular country may yield biased and unreliable result. Selecting the threshold of minimum data point required to be consider as 350. 
 
+Identify countries which have the most complete records across all attacks
+```{r}
+threshold_of_minimum_datapoint <- 350
+duplicate_list_of_countries_fulfilling_threshold <- list()
+
+for (colNames in colnames(cyber_data)[3:10]) {
+  complete_colName <- paste0("count_", colNames, "_non_na")
+  country_name <-
+    country_count %>% filter(.data[[complete_colName]] > threshold_of_minimum_datapoint) %>% select(Country)
+  duplicate_list_of_countries_fulfilling_threshold <-
+    c(duplicate_list_of_countries_fulfilling_threshold,
+      country_name)
+}
+
+# Find the common elements
+common_elements <- Reduce(intersect, duplicate_list_of_countries_fulfilling_threshold)
+
+# Print the result
+print(common_elements)
+```
+
 Create scatter plot of each of the column in the dataset across countries
 ```{r}
 # Subset the data base on Country once
-filtered_data <- cyber_data[cyber_data$Country %in% country_count$Country[country_count$count > 350], ]
+filtered_data <- cyber_data[cyber_data$Country %in% common_elements, ]
 
 # Extract the legend from the main plot
 get_legend <- function(plot) {
@@ -640,6 +661,7 @@ ggsave(
   create.dir = TRUE
 )
 ```
+
 
 -----
 
