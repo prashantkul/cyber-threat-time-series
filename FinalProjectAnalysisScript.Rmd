@@ -164,7 +164,7 @@ cat(c('Creating', length(missing_dates), 'date record for simplicity and complet
 # Add the time part and convert each date string to POSIXct with PDT timezone
 missing_datetime_list <- sapply(missing_dates, function(date_str) {
   datetime_str <- paste(date_str, "06:00:00") # Force the time for the rows to be 06:00
-  datetime_obj <- as.POSIXct(datetime_str, format="%Y-%m-%d %H:%M:%S", tz="America/Los_Angeles")
+  datetime_obj <- as.POSIXct(datetime_str, format="%Y-%m-%d %H:%M:%S", tz="UTC")
   formatted_datetime <- format(datetime_obj, "%Y-%m-%d %H:%M:%S %Z")
   return(formatted_datetime)
 })
@@ -212,7 +212,7 @@ transform_datetime <- function(date_str_column, datetime_column) {
     return(NA)  # Return NA if the date string is missing
   } else {
     datetime_str <- paste(date_str_column, "00:00:00")  # Add the time "00:00:00"
-    datetime_obj <- as.POSIXct(datetime_str, format="%Y-%m-%d %H:%M:%S", tz="America/Los_Angeles")
+    datetime_obj <- as.POSIXct(datetime_str, format="%Y-%m-%d %H:%M:%S", tz="UTC")
     return(as.character(datetime_obj))  # Return the formatted datetime as a string
   }
 }
@@ -767,6 +767,7 @@ for (country in common_elements) {
   )
 }
 ```
+
 
 -----
 
