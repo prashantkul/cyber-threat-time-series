@@ -25,6 +25,14 @@ library(stats) # Package used for statistical calculations and random number gen
 library(forecast) # Package used for functions that could be used for creating forecast including seasonality plot
 
 library(ggplot2) # Package used for plotting out the the dataset
+
+library(tidyr)
+
+library(stringr)
+
+library(grid)
+
+library(gridExtra)
 ```
 
 -----
@@ -247,9 +255,6 @@ Note that there are uneven number of observations per each country across the ti
 
 Perform data transformation converting table from wide to long format
 ```{r}
-library(tidyr)
-library(stringr)
-
 # Assuming 'country_count' is the grouped and summarized data
 country_count_long <- country_count %>%
   pivot_longer(
@@ -353,9 +358,6 @@ date_count
 
 Perform data transformation converting table from wide to long format
 ```{r}
-library(tidyr)
-library(stringr)
-
 # Assuming 'date_count' is the grouped and summarized data
 date_count_long <- date_count %>%
   pivot_longer(
@@ -531,9 +533,6 @@ Limit the country interested to be particular ones since having too little data 
 
 Create scatter plot of each of the column in the dataset across countries
 ```{r}
-library(grid)
-library(gridExtra)
-
 # Subset the data base on Country once
 filtered_data <- cyber_data[cyber_data$Country %in% country_count$Country[country_count$count > 350], ]
 
