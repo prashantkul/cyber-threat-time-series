@@ -638,7 +638,7 @@ for (colNames in colnames(cyber_data)[3:10]) {
   
   # Save each one of the variable scatter plot
   ggsave(
-    filename = paste0(colNames, "ScatterPlotAcrossCountry.jpeg"),
+    filename = paste0(colNames, "TimeSeriesPlotAcrossCountry.jpeg"),
     path = "./plots/",
     plot = main_plot,
     width = 40,
