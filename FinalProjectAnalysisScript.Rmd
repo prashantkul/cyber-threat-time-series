@@ -245,6 +245,85 @@ country_count
 
 Note that there are uneven number of observations per each country across the time period examined. So I need to perform some selection/aggregation/data generation/filtering in order to have an observation that is consistently recorded per day.
 
+Perform data transformation converting table from wide to long format
+```{r}
+library(tidyr)
+library(stringr)
+
+# Assuming 'country_count' is the grouped and summarized data
+country_count_long <- country_count %>%
+  pivot_longer(
+    # Select columns starting with 'count_'
+    cols = starts_with("count_"),
+    # Split column names into two variables
+    names_to = c("AttackType", "IsNA"),
+    # Use regex to extract 'AttackType' and 'IsNA'
+    names_pattern = "count_(.*)_(.*)",
+    # New column for the counts
+    values_to = "Count"  
+  ) %>%
+  separate(
+    AttackType,
+    into = c("AttackType", "Part_IsNA"),
+    sep = "_",
+    fill = "right",
+    remove = FALSE
+  ) %>%
+  mutate(IsNA = ifelse(is.na(Part_IsNA), IsNA, paste(Part_IsNA, IsNA, sep = "_"))) %>% # Append to existing 'IsNA'
+  select(-Part_IsNA)  # Remove temporary columns
+
+# View the reshaped data
+print(country_count_long)
+```
+
+Create overall visualization showing the phenomena across columns
+```{r}
+for (colNames in colnames(cyber_data)[3:10]) {
+  par(mar = c(20, 20, 20, 20))    # Larger margins
+  
+  # Filter out relevant rows
+  filtered_data <-
+    country_count_long[country_count_long$AttackType == colNames,]
+  
+  # Save as a variable to plot
+  main_plot <-
+    ggplot(filtered_data, aes(x = Country, y = Count, fill = IsNA)) +
+    geom_bar(stat = "identity" ,
+             position = "stack",
+             alpha = 0.6) +
+    theme_minimal() + # Use a clean theme
+    scale_x_discrete(expand = expansion(mult = 0.01)) +  # Optional: Add slight expansion for better spacing
+    theme(
+      axis.text.x = element_text(
+        angle = 90,
+        hjust = 1,
+        size = 14
+      ),
+      # Title font size
+      plot.title = element_text(size = 30),
+      # X-axis label font size
+      axis.title.x = element_text(size = 20),
+      # Y-axis label font size
+      axis.title.y = element_text(size = 20),
+      # Y-axis tick label font size
+      axis.text.y = element_text(size = 14)
+    ) +
+    labs(
+      x = "Countries",
+      y = "Count of Observations",
+      title = paste(
+        "Bar Plot of Number of Observations in",
+        colNames,
+        "Category per Country"
+      )
+    )
+  
+  # Show the plot
+  print(main_plot)
+  
+}
+```
+
 Create visualization showing the phenomena 
 ```{r}
 par(mar = c(20, 20, 20, 20))    # Larger margins
