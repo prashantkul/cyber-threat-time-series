@@ -768,6 +768,16 @@ for (country in common_elements) {
 }
 ```
 
+Create a dataframe to examine the attack percentage in each category across countries and dates
+```{r}
+grouped_by_country_attack <- melted_df %>%
+  group_by(Attack_Type, ConvertedAttackDate) %>%
+  summarise(
+    average_attack_percentage = mean(Attack_Percentage, na.rm = TRUE),
+    total_attack_percentage = sum(Attack_Percentage, na.rm = TRUE)
+  ) %>%
+  relocate(ConvertedAttackDate, Attack_Type, average_attack_percentage, total_attack_percentage)
+```
 
 -----
 
