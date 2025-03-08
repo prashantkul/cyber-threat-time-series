@@ -488,7 +488,7 @@ for (colNames in colnames(cyber_data)[3:10]) {
   # Show the plot
   print(main_plot)
   
-  # Save each one of the variable scatter plot
+  # Save each one of the variable time series plot
   ggsave(
     filename = paste0("ObservationCountFor", colNames, "ArossTime.jpeg"),
     path = "./plots/",
@@ -552,7 +552,7 @@ common_elements <- Reduce(intersect, duplicate_list_of_countries_fulfilling_thre
 print(common_elements)
 ```
 
-Create scatter plot of each of the column in the dataset across countries
+Create time series plot of each of the column in the dataset across countries
 ```{r}
 # Subset the data base on Country once
 filtered_data <- cyber_data[cyber_data$Country %in% common_elements, ]
@@ -568,7 +568,7 @@ get_legend <- function(plot) {
 for (colNames in colnames(cyber_data)[3:10]) {
   par(mar = c(10, 10, 10, 10))    # Larger margins
   
-  # Create a scatter plot with color-coded points
+  # Create a time series plot with color-coded points
   main_plot <- ggplot(filtered_data,
                       aes(x = ConvertedAttackDate,
                           y = .data[[colNames]],   # Use .data[[y_column]] for dynamic column names
@@ -636,7 +636,7 @@ for (colNames in colnames(cyber_data)[3:10]) {
   # Display the main plot
   print(main_plot)
   
-  # Save each one of the variable scatter plot
+  # Save each one of the variable time series plot
   ggsave(
     filename = paste0(colNames, "TimeSeriesPlotAcrossCountry.jpeg"),
     path = "./plots/",
@@ -680,7 +680,7 @@ melted_df <- filtered_data[c("Country", "ConvertedAttackDate", attack_columns)] 
 print(melted_df)
 ```
 
-Create scatter plot of each country across all the metrics currently examining.
+Create time series plot of each country across all the metrics currently examining.
 ```{r}
 for (country in common_elements) {
   # Filter out relevant rows
@@ -688,7 +688,7 @@ for (country in common_elements) {
   
   par(mar = c(10, 10, 10, 10))    # Larger margins
   
-  # Create a scatter plot with color-coded points
+  # Create a time series plot with color-coded points
   main_plot <- ggplot(filtered_data,
                       aes(x = ConvertedAttackDate,
                           y = Attack_Percentage,  
@@ -701,7 +701,7 @@ for (country in common_elements) {
                size = 3)  +
     theme_minimal() +
     labs(
-      title = paste("Scatter Plot of", country, "\nacross all attacks"),
+      title = paste("Time Series Plot of", country, "\nacross all attacks"),
       x = "Date (in days)",
       y = "Percentage value of attack types"
     ) +
@@ -755,7 +755,7 @@ for (country in common_elements) {
   # Join the split text without spaces
   shortened_country <- paste(split_country, collapse = "")
   
-  # Save each one of the variable scatter plot
+  # Save each one of the variable time series plot
   ggsave(
     filename = paste0(shortened_country, "-TimeSeriesPlotAcrossAttacks.jpeg"),
     path = "./plots/country",
