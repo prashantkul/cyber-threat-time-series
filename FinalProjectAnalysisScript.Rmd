@@ -680,6 +680,76 @@ melted_df <- filtered_data[c("Country", "ConvertedAttackDate", attack_columns)] 
 print(melted_df)
 ```
 
+Create scatter plot of each country across all the metrics currently examining.
+```{r}
+for (country in common_elements) {
+  # Filter out relevant rows
+  filtered_data <- melted_df %>% filter(Country == country)
+  
+  par(mar = c(10, 10, 10, 10))    # Larger margins
+  
+  # Create a scatter plot with color-coded points
+  main_plot <- ggplot(filtered_data,
+                      aes(x = ConvertedAttackDate,
+                          y = Attack_Percentage,  
+                          color = Attack_Type)) +
+    scale_x_date(date_breaks = "1 month",          # Break x-axis by 1 month
+                 date_labels = "%Y/%m") +                # Format labels as yyyy/mm
+    geom_line(linewidth = 2) +  # Draw lines
+    geom_point(na.rm = TRUE,
+               alpha = 0.5,
+               size = 3)  +
+    theme_minimal() +
+    labs(
+      title = paste("Scatter Plot of", country, "\nacross all attacks"),
+      x = "Date (in days)",
+      y = "Percentage value of attack types"
+    ) +
+    guides(color = guide_legend(ncol = 7, nrow = 30)) +
+    theme(
+      # Title font size
+      plot.title = element_text(size = 30),
+      
+      # Change font size of facet labels
+      strip.text = element_text(size = 16),
+      
+      # X-axis label font size
+      axis.title.x = element_text(size = 20),
+      # Y-axis label font size
+      axis.title.y = element_text(size = 20),
+      
+      # Y-axis tick label font size
+      axis.text.y = element_text(size = 14),
+      # Rotate labels
+      axis.text.x = element_text(
+        angle = 45,
+        hjust = 1,
+        size = 14
+      ),
+      
+      # Size of legend title
+      legend.title = element_text(size = 20),
+      # Size of legend labels
+      legend.text = element_text(size = 15),
+      # Put legend at right
+      legend.position = "right",
+      # Size of legend keys
+      legend.key.size = unit(0.2, "lines"),
+      # Spacing between legend items
+      legend.spacing = unit(0.1, "cm"),
+      # Margin around the legend
+      legend.margin = margin(0, 0, 0, 0),
+      # Spacing between legend and plot
+      legend.box.spacing = unit(0.1, "cm"),
+      # Arrange legend items vertically
+      legend.direction = "vertical",
+    )
+  
+  # Display the main plot
+  print(main_plot)
+  
+}
+```
 
 -----
 
