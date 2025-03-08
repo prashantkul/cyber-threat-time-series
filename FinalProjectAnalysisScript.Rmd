@@ -333,7 +333,7 @@ for (colNames in colnames(cyber_data)[3:10]) {
   # Save each one of the variable bar plot
   ggsave(
     filename = paste0("ObservationCountFor", colNames, "ArossCountries.jpeg"),
-    path = "./plots/",
+    path = "./plots/overview/",
     plot = main_plot,
     width = 40,
     height = 20,
@@ -431,7 +431,7 @@ Export to file
 # Save plot
 ggsave(
   filename = "NumberOfObservationsPerDatePerAttackType.jpeg",
-  path = "./plots/",
+  path = "./plots/overview/",
   width = 40,
   height = 20,
   dpi = 320,
@@ -491,7 +491,7 @@ for (colNames in colnames(cyber_data)[3:10]) {
   # Save each one of the variable time series plot
   ggsave(
     filename = paste0("ObservationCountFor", colNames, "ArossTime.jpeg"),
-    path = "./plots/",
+    path = "./plots/overview/",
     plot = main_plot,
     width = 40,
     height = 20,
@@ -523,7 +523,7 @@ for (colNames in colnames(cyber_data)[3:10]) {
   scatter_plot <- recordPlot()
 
   # Export the plot to a file
-  jpeg(paste0("./plots/", colNames, "ScatterPlot.jpeg"), width = 800, height = 600, quality = 100)
+  jpeg(paste0("./plots/attackType/", colNames, "ScatterPlot.jpeg"), width = 800, height = 600, quality = 100)
   replayPlot(scatter_plot)  # Replay the captured plot
   dev.off()
 }
@@ -639,7 +639,7 @@ for (colNames in colnames(cyber_data)[3:10]) {
   # Save each one of the variable time series plot
   ggsave(
     filename = paste0(colNames, "TimeSeriesPlotAcrossCountry.jpeg"),
-    path = "./plots/",
+    path = "./plots/attackType-country/",
     plot = main_plot,
     width = 40,
     height = 20,
@@ -654,7 +654,7 @@ grid.draw(legend_plot)  # Display the legend in a separate window
 # Save the legend plot once
 ggsave(
   filename = "CountryLegend.jpeg",
-  path = "./plots/",
+  path = "./plots/attackType-country/",
   plot = legend_plot,
   width = 40,
   height = 20,
@@ -758,7 +758,7 @@ for (country in common_elements) {
   # Save each one of the variable time series plot
   ggsave(
     filename = paste0(shortened_country, "-TimeSeriesPlotAcrossAttacks.jpeg"),
-    path = "./plots/country",
+    path = "./plots/country/",
     plot = main_plot,
     width = 40,
     height = 20,
