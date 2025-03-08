@@ -321,6 +321,16 @@ for (colNames in colnames(cyber_data)[3:10]) {
   # Show the plot
   print(main_plot)
   
+  # Save each one of the variable bar plot
+  ggsave(
+    filename = paste0("ObservationCountFor", colNames, "ArossCountries.jpeg"),
+    path = "./plots/",
+    plot = main_plot,
+    width = 40,
+    height = 20,
+    dpi = 320,
+    create.dir = TRUE
+  )
 }
 ```
 
