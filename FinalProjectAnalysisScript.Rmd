@@ -512,7 +512,7 @@ for (colNames in colnames(cyber_data)[3:10]) {
     x = cyber_data$ConvertedAttackDate,
     y = cyber_data[,  colNames],
     main = paste0("Scatter Plot of ", colNames),
-    xlab = "Time (in months)",
+    xlab = "Date (in days)",
     ylab = "Percentage value of \nattack types",
     pch = 1,
     cex = 0.2,
@@ -582,7 +582,7 @@ for (colNames in colnames(cyber_data)[3:10]) {
     theme_minimal() +
     labs(
       title = paste("Time Series Plot of", colNames, "per Country Group"),
-      x = "Time (in months)",
+      x = "Date (in days)",
       y = paste("Percentage value of attack types:", colNames)
     ) +
     guides(color = guide_legend(ncol = 7, nrow = 30)) +
