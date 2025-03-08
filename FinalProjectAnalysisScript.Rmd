@@ -663,6 +663,23 @@ ggsave(
 )
 ```
 
+Create a pivoted table of the columns interested `ConvertedAttackDate`, `Country`, `Attack_Type`, `Attack_Percentage`.
+```{r}
+attack_columns <- colnames(cyber_data)[3:10]
+
+# Pivot the data frame
+melted_df <- filtered_data[c("Country", "ConvertedAttackDate", attack_columns)] %>%
+  pivot_longer(
+    cols = all_of(attack_columns), # Use the vector of column names
+    names_to = "Attack_Type",      # New column for attack type names
+    values_to = "Attack_Percentage"     # New column for attack counts
+  ) %>%
+  relocate(ConvertedAttackDate, Country, Attack_Type, Attack_Percentage)
+
+# Print the result
+print(melted_df)
+```
+
 
 -----
 
