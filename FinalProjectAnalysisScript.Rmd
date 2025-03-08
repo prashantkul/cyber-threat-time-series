@@ -748,6 +748,23 @@ for (country in common_elements) {
   # Display the main plot
   print(main_plot)
   
+  # Split the text by spaces
+  split_country <-
+    strsplit(country, " ")[[1]]  # Use [[1]] to extract the vector from the list
+  
+  # Join the split text without spaces
+  shortened_country <- paste(split_country, collapse = "")
+  
+  # Save each one of the variable scatter plot
+  ggsave(
+    filename = paste0(shortened_country, "-TimeSeriesPlotAcrossAttacks.jpeg"),
+    path = "./plots/country",
+    plot = main_plot,
+    width = 40,
+    height = 20,
+    dpi = 320,
+    create.dir = TRUE
+  )
 }
 ```
 
