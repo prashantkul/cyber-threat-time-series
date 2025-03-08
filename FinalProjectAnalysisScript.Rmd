@@ -785,6 +785,18 @@ grouped_by_country_attack <- melted_df %>%
 
 #### Initial Plot
 
+Pick out a particular AttackType to model
+```{r}
+attack_type_specified <- "Spam"
+
+specified_time_series <-
+  ts(
+    grouped_by_country_attack$average_attack_percentage[grouped_by_country_attack$Attack_Type == attack_type_specified],
+    start = c(as.numeric(format(min_date, "%Y")), as.numeric(format(min_date, "%j"))),
+    frequency = 365
+  )
+```
+
 Select out one of the country where the data is 'complete' to model
 ```{r}
 test <- ts(cyber_data$Local.Infection[cyber_data$Country == "United States of America"],
