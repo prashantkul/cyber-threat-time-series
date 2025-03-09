@@ -869,7 +869,10 @@ dev.off()
 Perform imputation to have complete data across the time period
 ```{r}
 library(zoo)
-plot(na.approx(specified_time_series))
+na_imputed_specified_time_series <- na.approx(specified_time_series)
+na_imputed_specified_time_series
+
+plot(na_imputed_specified_time_series)
 ```
 
 Examine Seasonality plot
@@ -880,7 +883,7 @@ ggseasonplot(specified_time_series,
 
 Examine Seasonality plot of imputed value dataset
 ```{r}
-ggseasonplot(na.approx(specified_time_series),
+ggseasonplot(na_imputed_specified_time_series,
              main = "Seasonal plot of the aggregated value imputed dataset")
 ```
 
@@ -891,7 +894,7 @@ tsdisplay(specified_time_series)
 
 Examine the ACF and PACF plot
 ```{r}
-tsdisplay(na.approx(specified_time_series))
+tsdisplay(na_imputed_specified_time_series)
 ```
 
 Examine the stationarity of the time series object
@@ -901,12 +904,12 @@ kpss.test(specified_time_series)
 
 Examine the stationarity of the time series object
 ```{r}
-kpss.test(na.approx(specified_time_series))
+kpss.test(na_imputed_specified_time_series)
 ```
 
 Apply differencing and re-examine the stationarity of the time series object
 ```{r}
-kpss.test(diff(na.approx(specified_time_series)))
+kpss.test(diff(na_imputed_specified_time_series))
 ```
 
 Examine if Box Cox transformation is needed for the time series object
@@ -916,12 +919,12 @@ BoxCox.lambda(specified_time_series)
 
 Examine if Box Cox transformation is needed for the time series object
 ```{r}
-BoxCox.lambda(na.approx(specified_time_series))
+BoxCox.lambda(na_imputed_specified_time_series)
 ```
 
 Apply differencing and re-examine the stationarity of the time series object
 ```{r}
-kpss.test(diff(na.approx(specified_time_series), differences = 2))
+kpss.test(diff(na_imputed_specified_time_series, differences = 2))
 ```
 
 Fit a ARIMA model on time series object without differencing or seasonal effect
@@ -951,7 +954,7 @@ ets(specified_time_series)
 
 Fit a exponential smoothing state space model
 ```{r}
-ets(na.approx(specified_time_series))
+ets(na_imputed_specified_time_series)
 ```
 
 -----
