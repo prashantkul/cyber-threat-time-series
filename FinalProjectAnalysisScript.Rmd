@@ -990,6 +990,24 @@ ggsave(
 )
 ```
 
+Train/Test split
+```{r}
+train_size <- floor(0.8 * length(specified_time_series)) + 2 
+# Reason why 2 is chosen is so that the time period is not going to end with NA. This value is dataset dependent.
+train_data <- specified_time_series[1:train_size]
+train_data
+test_data  <- specified_time_series[(train_size + 1):length(specified_time_series)]
+test_data
+```
+
+```{r}
+na_imputed_train_data <- na_imputed_specified_time_series[1:train_size]
+na_imputed_train_data
+na_imputed_test_data  <- na_imputed_specified_time_series[(train_size + 1):length(na_imputed_specified_time_series)]
+na_imputed_test_data
+```
+
+
 Examine the ACF and PACF plot
 ```{r}
 tsdisplay(specified_time_series)
