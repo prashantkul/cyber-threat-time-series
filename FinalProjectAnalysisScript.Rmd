@@ -945,13 +945,49 @@ dev.off()
 Examine Seasonality plot
 ```{r}
 ggseasonplot(specified_time_series,
-             main = "Seasonal plot of the aggregated dataset")
+             main = "Seasonal plot of the aggregated dataset") +
+  theme(
+    axis.ticks.x = element_blank(),  # Remove x-axis ticks
+    axis.text.x = element_blank()    # Remove x-axis tick labels
+  ) +
+  xlab("Daily")        # Change the x-axis label
+```
+
+Export to file
+```{r}
+# Save plot
+ggsave(
+  filename = paste0("SeasonalPlotOf", attack_type_specified,"TimeSeries.jpeg"),
+  path = "./plots/timeseries//",
+  width = 20,
+  height = 10,
+  dpi = 320,
+  create.dir = TRUE
+)
 ```
 
 Examine Seasonality plot of imputed value dataset
 ```{r}
 ggseasonplot(na_imputed_specified_time_series,
-             main = "Seasonal plot of the aggregated value imputed dataset")
+             main = "Seasonal plot of the aggregated value imputed dataset") +
+  theme(
+    axis.ticks.x = element_blank(),  # Remove x-axis ticks
+    axis.text.x = element_blank()    # Remove x-axis tick labels
+  ) +
+  xlab("Daily")        # Change the x-axis label
+```
+
+Export to file
+```{r}
+# Save plot
+ggsave(
+  filename = paste0("SeasonalPlotOfNAImputed", attack_type_specified,"TimeSeries.jpeg"),
+  path = "./plots/timeseries//",
+  width = 20,
+  height = 10,
+  dpi = 320,
+  create.dir = TRUE
+)
 ```
 
 Examine the ACF and PACF plot
