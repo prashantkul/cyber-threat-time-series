@@ -1200,32 +1200,38 @@ kpss.test(diff(na_imputed_specified_time_series, differences = 2))
 
 Fit a ARIMA model on time series object without differencing or seasonal effect
 ```{r}
-auto.arima(specified_time_series, seasonal = FALSE)
+arima_original <- auto.arima(specified_time_series, seasonal = FALSE)
+arima_original
 ```
 
 Fit a ARIMA model on time series object without differencing
 ```{r}
-auto.arima(specified_time_series)
+sarima_original <- auto.arima(specified_time_series)
+sarima_original
 ```
 
 Fit a ARIMA model on differenced time series object and no seasonal effect
 ```{r}
-auto.arima(diff(specified_time_series), seasonal = FALSE)
+arima_diff <- auto.arima(diff(specified_time_series), seasonal = FALSE)
+arima_diff
 ```
 
 Fit a ARIMA model on differened time series object
 ```{r}
-auto.arima(diff(specified_time_series))
+sarima_diff <- auto.arima(diff(specified_time_series))
+sarima_diff
 ```
 
 Fit a exponential smoothing state space model
 ```{r}
-ets(specified_time_series)
+ets_original <- ets(specified_time_series)
+ets_original
 ```
 
 Fit a exponential smoothing state space model
 ```{r}
-ets(na_imputed_specified_time_series)
+ets_na_imputed <- ets(na_imputed_specified_time_series)
+ets_na_imputed
 ```
 
 -----
