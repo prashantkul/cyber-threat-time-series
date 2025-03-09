@@ -1389,6 +1389,22 @@ ets(test)
 ```
 -----
 
+Create forecasts
+```{r}
+arima_forecast <- forecast(arima_na_imputed_train, h = length(na_imputed_test_data))
+arima_forecast
+```
+
+```{r}
+arima_diff_forecast <- forecast(arima_diff_na_imputed_train, h = length(na_imputed_test_data))
+arima_diff_forecast
+```
+
+```{r}
+ets_forecast <- forecast(ets_na_imputed_train, h = length(na_imputed_test_data))
+ets_forecast
+```
+
 ### 4. Model Selection: Select final model based on selection criteria and evaluate forecasting metrics and accuracy.
 
 
