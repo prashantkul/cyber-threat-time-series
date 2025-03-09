@@ -1160,12 +1160,27 @@ kpss.test(specified_time_series)
 
 Examine the stationarity of the time series object
 ```{r}
+kpss.test(train_data)
+```
+
+Examine the stationarity of the time series object
+```{r}
 kpss.test(na_imputed_specified_time_series)
+```
+
+Examine the stationarity of the time series object
+```{r}
+kpss.test(na_imputed_train_data)
 ```
 
 Apply differencing and re-examine the stationarity of the time series object
 ```{r}
 kpss.test(diff(na_imputed_specified_time_series))
+```
+
+Apply differencing and re-examine the stationarity of the time series object
+```{r}
+kpss.test(diff(na_imputed_train_data))
 ```
 
 Examine if Box Cox transformation is needed for the time series object
