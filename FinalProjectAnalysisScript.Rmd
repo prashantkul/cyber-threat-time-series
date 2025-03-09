@@ -1228,10 +1228,100 @@ ets_original <- ets(specified_time_series)
 ets_original
 ```
 
+----
+
+Fit a ARIMA model on time series object without differencing or seasonal effect
+```{r}
+arima_original_train <- auto.arima(train_data, seasonal = FALSE)
+arima_original_train
+```
+
+Fit a ARIMA model on time series object without differencing
+```{r}
+sarima_original_train <- auto.arima(train_data)
+sarima_original_train
+```
+
+Fit a ARIMA model on differenced time series object and no seasonal effect
+```{r}
+arima_diff_train <- auto.arima(diff(train_data), seasonal = FALSE)
+arima_diff_train
+```
+
+Fit a ARIMA model on differened time series object
+```{r}
+sarima_diff_train <- auto.arima(diff(train_data))
+sarima_diff_train
+```
+
+Fit a exponential smoothing state space model
+```{r}
+ets_original_train <- ets(train_data)
+ets_original_train
+```
+
+-----
+
+Fit a ARIMA model on time series object without differencing or seasonal effect
+```{r}
+arima_na_imputed <- auto.arima(na_imputed_specified_time_series, seasonal = FALSE)
+arima_na_imputed
+```
+
+Fit a ARIMA model on time series object without differencing
+```{r}
+sarima_na_imputed <- auto.arima(na_imputed_specified_time_series)
+sarima_na_imputed
+```
+
+Fit a ARIMA model on differenced time series object and no seasonal effect
+```{r}
+arima_diff_na_imputed <- auto.arima(diff(na_imputed_specified_time_series), seasonal = FALSE)
+arima_diff_na_imputed
+```
+
+Fit a ARIMA model on differened time series object
+```{r}
+sarima_diff_na_imputed <- auto.arima(diff(na_imputed_specified_time_series))
+sarima_diff_na_imputed
+```
+
 Fit a exponential smoothing state space model
 ```{r}
 ets_na_imputed <- ets(na_imputed_specified_time_series)
 ets_na_imputed
+```
+
+-----
+
+Fit a ARIMA model on time series object without differencing or seasonal effect
+```{r}
+arima_na_imputed_train <- auto.arima(na_imputed_train_data, seasonal = FALSE)
+arima_na_imputed_train
+```
+
+Fit a ARIMA model on time series object without differencing
+```{r}
+sarima_na_imputed_train <- auto.arima(na_imputed_train_data)
+sarima_na_imputed_train
+```
+
+Fit a ARIMA model on differenced time series object and no seasonal effect
+```{r}
+arima_diff_na_imputed_train <- auto.arima(diff(na_imputed_train_data), seasonal = FALSE)
+arima_diff_na_imputed_train
+```
+
+Fit a ARIMA model on differened time series object
+```{r}
+sarima_diff_na_imputed_trian <- auto.arima(diff(na_imputed_train_data))
+sarima_diff_na_imputed_trian
+```
+
+Fit a exponential smoothing state space model
+```{r}
+ets_na_imputed_train <- ets(na_imputed_train_data)
+ets_na_imputed_train
 ```
 
 -----
