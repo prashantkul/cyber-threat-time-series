@@ -33,6 +33,8 @@ library(stringr)
 library(grid)
 
 library(gridExtra)
+
+library(zoo)
 ```
 
 -----
@@ -795,11 +797,18 @@ grouped_by_country_attack_row_added <-
 
 attack_type_specified <- "Spam"
 
+# Filter dataset
+attack_df <- 
+  grouped_by_country_attack_row_added[grouped_by_country_attack_row_added$Attack_Type == attack_type_specified,
+                                      !names(grouped_by_country_attack_row_added) %in% "Attack_Type"]
+
+# Order the dataframe by ConvertedAttackDate since that is needed for ts object as well as imputation
+attack_df <- attack_df[order(attack_df$ConvertedAttackDate), ]
+
+# Create time series object
 specified_time_series <-
   ts(
-    grouped_by_country_attack_row_added$average_attack_percentage[
-      grouped_by_country_attack_row_added$Attack_Type == attack_type_specified,
-      !names(grouped_by_country_attack_row_added) %in% "Attack_Type"],
+    attack_df$average_attack_percentage,
     start = c(as.numeric(format(min_date, "%Y")), as.numeric(format(min_date, "%j"))),
     frequency = 365
   )
@@ -871,9 +880,9 @@ Perform imputation to have complete data across the time period
 library(zoo)
 na_imputed_specified_time_series <- na.approx(specified_time_series)
 na_imputed_specified_time_series
-
 plot(na_imputed_specified_time_series)
 ```
+
 
 Examine Seasonality plot
 ```{r}
