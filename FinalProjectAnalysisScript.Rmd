@@ -1007,7 +1007,6 @@ na_imputed_test_data  <- na_imputed_specified_time_series[(train_size + 1):lengt
 na_imputed_test_data
 ```
 
-
 Examine the ACF and PACF plot
 ```{r}
 tsdisplay(specified_time_series)
@@ -1015,7 +1014,17 @@ tsdisplay(specified_time_series)
 
 Examine the ACF and PACF plot
 ```{r}
+tsdisplay(train_data)
+```
+
+Examine the ACF and PACF plot
+```{r}
 tsdisplay(na_imputed_specified_time_series)
+```
+
+Examine the ACF and PACF plot
+```{r}
+tsdisplay(na_imputed_train_data)
 ```
 
 Examine the stationarity of the time series object
