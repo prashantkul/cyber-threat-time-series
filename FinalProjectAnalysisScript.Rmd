@@ -787,11 +787,19 @@ grouped_by_country_attack <- melted_df %>%
 
 Pick out a particular AttackType to model
 ```{r}
+# Since previous step removed NA values for calculation, add back the missing dates back to dataframe
+additional_rows <- data.frame(ConvertedAttackDate = missing_dates)
+additional_rows$Attack_Type <- "Spam"
+grouped_by_country_attack_row_added <-
+  rbind(grouped_by_country_attack, additional_rows)
+
 attack_type_specified <- "Spam"
 
 specified_time_series <-
   ts(
-    grouped_by_country_attack$average_attack_percentage[grouped_by_country_attack$Attack_Type == attack_type_specified],
+    grouped_by_country_attack_row_added$average_attack_percentage[
+      grouped_by_country_attack_row_added$Attack_Type == attack_type_specified,
+      !names(grouped_by_country_attack_row_added) %in% "Attack_Type"],
     start = c(as.numeric(format(min_date, "%Y")), as.numeric(format(min_date, "%j"))),
     frequency = 365
   )
@@ -799,7 +807,37 @@ specified_time_series <-
 
 Plot out the original time series
 ```{r}
-plot(specified_time_series)
+# Adjust the margins: c(bottom, left, top, right)
+par(mar = c(10, 5, 5, 2)) # Increase the top margin to 6 lines
+
+complete_date <-
+  unique(grouped_by_country_attack_row_added$ConvertedAttackDate)
+
+plot(
+  x = complete_date,
+  y = specified_time_series,
+  main = paste(
+    "Daily Average Attack Percentage \nfor",
+    attack_type_specified,
+    "\nAcross Countries"
+  ),
+  ylab = "Average Attack Percentage",
+  xlab = "",
+  type = "l",
+  xaxt = "n"
+)
+
+# Add custom x-axis with daily labels
+axis(
+  1,
+  at = as.numeric(complete_date),
+  labels = format(complete_date, "%Y/%m/%d"),
+  las = 2,
+  cex.axis = 0.5
+) # `las = 2` rotates the labels, `cex.axis` adjusts label size
+
+# Move the x-axis label down using mtext
+mtext("Date (in days)", side = 1, line = 4) # Move xlabel down
 ```
 
 As seen in the graph, there are missing points for some dates where the line become disjointed.
