@@ -1470,6 +1470,40 @@ Examine the residual plot
 checkresiduals(arima_na_imputed_train)
 ```
 
+-----
+
+USA/Spam modeling
+
+Create a dataframe to examine the attack percentage in `Spam` category in `United States of America`
+```{r}
+usa_spam_df <- melted_df %>%
+  filter(Attack_Type == "Spam", Country == "United States of America") %>% 
+  group_by(ConvertedAttackDate) %>%
+  select(-c(Attack_Type, Country)) %>%
+  relocate(ConvertedAttackDate, Attack_Percentage)
+```
+
+Add in missing date rows to create complete dataframe
+```{r}
+# Since previous step removed NA values for calculation, add back the missing dates back to dataframe
+additional_rows <- data.frame(ConvertedAttackDate = missing_dates)
+complete_usa_spam_df <-
+  rbind(usa_spam_df, additional_rows)
+
+# Order the dataframe by ConvertedAttackDate since that is needed for ts object as well as imputation
+complete_usa_spam_df <- complete_usa_spam_df[order(complete_usa_spam_df$ConvertedAttackDate), ]
+
+# Create time series object
+complete_usa_spam_time_series <-
+  ts(
+    complete_usa_spam_df,
+    start = c(as.numeric(format(min_date, "%Y")), as.numeric(format(min_date, "%j"))),
+    frequency = 365
+  )
+```
+
+
+
 ### 4. Model Selection: Select final model based on selection criteria and evaluate forecasting metrics and accuracy.
 
 
