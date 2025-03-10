@@ -2058,6 +2058,82 @@ replayPlot(time_series_plot)  # Replay the captured plot
 dev.off()
 ```
 
+----
+
+Model Diagnostics
+
+
+Examine residuals
+```{r}
+checkresiduals(arima_original_diff)
+
+residual_plot <- recordPlot()
+```
+
+Export plot to file
+```{r}
+if (!dir.exists("./plots/modeldiagnostics/")) {
+  dir.create("./plots/modeldiagnostics/")
+}
+
+# Export the plot to a file
+jpeg(
+  paste0("./plots/modeldiagnostics/", 
+         "USASpamForecast",
+         "ResidualPlot.jpeg"), 
+  width = 4800,
+  height = 3600,
+  res = 320
+)
+
+replayPlot(residual_plot)  # Replay the captured plot
+
+dev.off()
+```
+
+Perform Shapiro-Wilk normality test to test for Normality
+```{r}
+shapiro.test(arima_original_diff$residuals)
+```
+
+Create QQ Norm plot
+```{r}
+qqnorm(arima_original_diff$residuals,main=expression(Normal~~Q-Q~~Plot))
+qqline(arima_original_diff$residuals)
+
+qq_plot <- recordPlot()
+```
+
+Export plot to file
+```{r}
+if (!dir.exists("./plots/modeldiagnostics/")) {
+  dir.create("./plots/modeldiagnostics/")
+}
+
+# Export the plot to a file
+jpeg(
+  paste0("./plots/modeldiagnostics/", 
+         "USASpamForecast",
+         "QQPlot.jpeg"), 
+  width = 4800,
+  height = 3600,
+  res = 320
+)
+
+replayPlot(qq_plot)  # Replay the captured plot
+
+dev.off()
+```
+
+Perform Ljung-Box test to test for Autocorrelation of Residual
+```{r}
+Box.test(arima_original_diff$residuals, type =  "Ljung-Box")
+```
+
+Perform Jarque-Bera Test to test for normality
+```{r}
+jarque.bera.test(arima_na_imputed_diff$residuals) 
+```
 
 
 ### 4. Model Selection: Select final model based on selection criteria and evaluate forecasting metrics and accuracy.
