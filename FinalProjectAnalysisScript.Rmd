@@ -1693,6 +1693,54 @@ ggsave(
 ```
 
 
+Train/Test split
+```{r}
+train_size <- floor(0.8 * length(complete_usa_spam_time_series)) + 2
+# Reason why 2 is chosen is so that the time period is not going to end with NA. This value is dataset dependent.
+train_data <- ts(
+  complete_usa_spam_time_series[1:train_size],
+  start = c(as.numeric(format(min_date, "%Y")), as.numeric(format(min_date, "%j"))),
+  frequency = 365
+)
+train_data
+
+test_data  <-
+  ts(
+    complete_usa_spam_time_series[(train_size + 1):length(complete_usa_spam_time_series)],
+    start = c(as.numeric(format(
+      complete_date[train_size + 1], "%Y"
+    )),
+    as.numeric(format(
+      complete_date[train_size + 1], "%j"
+    ))),
+    frequency = 365
+  )
+test_data
+```
+
+```{r}
+na_imputed_train_data <-
+  ts(
+    na_imputed_complete_usa_spam_time_series[1:train_size],
+    start = c(as.numeric(format(min_date, "%Y")), as.numeric(format(min_date, "%j"))),
+    frequency = 365
+  )
+na_imputed_train_data
+na_imputed_test_data  <-
+  ts(
+    na_imputed_complete_usa_spam_time_series[(train_size + 1):length(na_imputed_complete_usa_spam_time_series)],
+    start = c(as.numeric(format(
+      complete_date[train_size + 1], "%Y"
+    )),
+    as.numeric(format(
+      complete_date[train_size + 1], "%j"
+    ))),
+    frequency = 365
+  )
+na_imputed_test_data
+```
+
+
 
 ### 4. Model Selection: Select final model based on selection criteria and evaluate forecasting metrics and accuracy.
 
