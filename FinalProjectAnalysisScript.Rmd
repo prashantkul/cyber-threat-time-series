@@ -1802,6 +1802,42 @@ replayPlot(acf_pacf_plot)  # Replay the captured plot
 dev.off()
 ```
 
+Examine the stationarity of the time series object
+```{r}
+kpss.test(train_data)
+```
+
+Examine the stationarity of the time series object
+```{r}
+kpss.test(na_imputed_train_data)
+```
+Since both values above are smaller than 0.05, this indicate that the process is non stationary.
+
+Examine the stationarity of the difference of time series object
+```{r}
+kpss.test(diff(train_data, differences = 1))
+```
+
+Examine the stationarity of the difference of time series object
+```{r}
+kpss.test(diff(na_imputed_train_data, differences = 1))
+```
+
+By taking 1st order differencing, the dataset can be made stationary.
+
+Examine if Box Cox transformation is needed for the time series object
+```{r}
+BoxCox.lambda(train_data)
+```
+
+Examine if Box Cox transformation is needed for the time series object
+```{r}
+BoxCox.lambda(na_imputed_train_data)
+```
+
+Since BoxCox.lambda yield a value of 1, no Box.Cox transformation is needed for this particular dataset.
+
+
 ### 4. Model Selection: Select final model based on selection criteria and evaluate forecasting metrics and accuracy.
 
 
