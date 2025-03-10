@@ -1933,6 +1933,130 @@ ets_na_imputed_forecast <- forecast(ets_na_imputed, h = length(na_imputed_test_d
 ets_na_imputed_forecast
 ```
 
+----
+
+Plot out the forecast
+```{r}
+# Adjust the margins: c(bottom, left, top, right)
+par(mar = c(10, 5, 5, 2)) # Increase the top margin to 6 lines
+
+complete_date <-
+  sort(unique(complete_usa_spam_df$ConvertedAttackDate))
+
+plot(arima_na_imputed_diff_forecast,
+  main = paste(
+    "Daily Attack Percentage \nfor",
+    "Spam",
+    "\nin United States of America"
+  ),
+  ylab = "Attack Percentage",
+  xlab = "",
+  type = "l",
+  xaxt = "n"
+)
+
+# Add custom x-axis with daily labels
+axis(
+  1,
+  at = as.numeric(complete_date),
+  labels = format(complete_date, "%Y/%m/%d"),
+  las = 2,
+  cex.axis = 0.5
+) # `las = 2` rotates the labels, `cex.axis` adjusts label size
+
+# Move the x-axis label down using mtext
+mtext("Date (in days)", side = 1, line = 4) # Move xlabel down
+
+# Capture the plot
+time_series_plot <- recordPlot()
+```
+
+Export plot to file
+```{r}
+if (!dir.exists("./plots/timeseries/")) {
+  dir.create("./plots/timeseries/")
+}
+
+# Export the plot to a file
+jpeg(
+  paste0("./plots/timeseries/", 
+         "USASpamForecastWithTest",
+         "TimeSeriesPlot.jpeg"), 
+  width = 4800,
+  height = 3600,
+  res = 320
+)
+
+replayPlot(time_series_plot)  # Replay the captured plot
+
+dev.off()
+```
+
+Plot out the forecast together with existing test set
+```{r}
+# Adjust the margins: c(bottom, left, top, right)
+par(mar = c(10, 5, 5, 2)) # Increase the top margin to 6 lines
+
+complete_date <-
+  sort(unique(grouped_by_country_attack_row_added$ConvertedAttackDate))
+
+plot(arima_diff_forecast,
+  main = paste(
+    "Daily Attack Percentage \nfor",
+    attack_type_specified,
+    "\nAcross Countries"
+  ),
+  ylab = "Average Attack Percentage",
+  xlab = "",
+  type = "l",
+  xaxt = "n"
+)
+
+# Add the second variable to the same plot
+lines(test_data, col = "red", lwd = 2)
+
+# Allow plotting outside the plot area
+par(xpd = TRUE)
+
+# Add a legend to annotate the variables
+legend("bottomleft", legend = c("Forecasted values (Model 1)", "Test dataset"), col = c("blue", "red"), lwd = 2)
+
+# Add custom x-axis with daily labels
+axis(
+  1,
+  at = as.numeric(complete_date),
+  labels = format(complete_date, "%Y/%m/%d"),
+  las = 2,
+  cex.axis = 0.5
+) # `las = 2` rotates the labels, `cex.axis` adjusts label size
+
+# Move the x-axis label down using mtext
+mtext("Date (in days)", side = 1, line = 4) # Move xlabel down
+
+# Capture the plot
+time_series_plot <- recordPlot()
+```
+
+Export plot to file
+```{r}
+if (!dir.exists("./plots/timeseries/")) {
+  dir.create("./plots/timeseries/")
+}
+
+# Export the plot to a file
+jpeg(
+  paste0("./plots/timeseries/", 
+         "USASpamForecastWithTest",
+         "TimeSeriesPlot.jpeg"), 
+  width = 4800,
+  height = 3600,
+  res = 320
+)
+
+replayPlot(time_series_plot)  # Replay the captured plot
+
+dev.off()
+```
 
 
 
