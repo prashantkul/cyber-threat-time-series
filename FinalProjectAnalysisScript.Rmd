@@ -1837,6 +1837,104 @@ BoxCox.lambda(na_imputed_train_data)
 
 Since BoxCox.lambda yield a value of 1, no Box.Cox transformation is needed for this particular dataset.
 
+----
+Model Building
+
+Fit a ARIMA model on time series object without differencing or seasonal effect
+```{r}
+arima_original <- auto.arima(train_data, seasonal = FALSE)
+arima_original
+```
+
+Fit a SARIMA model on time series object without differencing
+```{r}
+sarima_original <- auto.arima(train_data)
+sarima_original
+```
+
+Fit a ARIMA model on time series object with differencing but without seasonal effect
+```{r}
+arima_original_diff <- auto.arima(train_data, seasonal = FALSE, d = 1)
+arima_original_diff
+```
+
+Fit a SARIMA model on time series object with differencing
+```{r}
+sarima_original_diff <- auto.arima(train_data, d = 1)
+sarima_original_diff
+```
+
+Fit a exponential smoothing state space model
+```{r}
+ets_original <- ets(train_data)
+ets_original
+```
+
+Fit a ARIMA model on time series object without differencing or seasonal effect
+```{r}
+arima_na_imputed <- auto.arima(na_imputed_train_data, seasonal = FALSE)
+arima_na_imputed
+```
+
+Fit a SARIMA model on time series object without differencing
+```{r}
+sarima_na_imputed <- auto.arima(na_imputed_train_data)
+sarima_na_imputed
+```
+
+Fit a ARIMA model on time series object with differencing but without seasonal effect
+```{r}
+arima_na_imputed_diff <- auto.arima(na_imputed_train_data, seasonal = FALSE, d = 1)
+arima_na_imputed_diff
+```
+
+Fit a SARIMA model on time series object with differencing
+```{r}
+sarima_na_imputed_diff <- auto.arima(na_imputed_train_data, d = 1)
+sarima_na_imputed_diff
+```
+
+Fit a exponential smoothing state space model
+```{r}
+ets_na_imputed_train_data <- ets(na_imputed_train_data)
+ets_na_imputed_train_data
+```
+
+------
+Generate forecast
+
+```{r}
+arima_diff_forecast <- forecast(arima_original_diff, h = length(test_data))
+arima_diff_forecast
+```
+
+```{r}
+sarima_diff_forecast <- forecast(sarima_original_diff, h = length(test_data))
+sarima_diff_forecast
+```
+
+```{r}
+ets_forecast <- forecast(ets_original, h = length(test_data))
+ets_forecast
+```
+
+```{r}
+arima_na_imputed_diff_forecast <- forecast(arima_na_imputed_diff, h = length(na_imputed_test_data))
+arima_na_imputed_diff_forecast
+```
+
+```{r}
+sarima_na_imputed_diff_forecast <- forecast(sarima_na_imputed_diff, h = length(na_imputed_test_data))
+sarima_na_imputed_diff_forecast
+```
+
+```{r}
+ets_na_imputed_forecast <- forecast(ets_na_imputed, h = length(na_imputed_test_data))
+ets_na_imputed_forecast
+```
+
+
+
 
 ### 4. Model Selection: Select final model based on selection criteria and evaluate forecasting metrics and accuracy.
 
