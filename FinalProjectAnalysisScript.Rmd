@@ -1980,7 +1980,7 @@ if (!dir.exists("./plots/timeseries/")) {
 # Export the plot to a file
 jpeg(
   paste0("./plots/timeseries/", 
-         "USASpamForecastWithTest",
+         "USASpamForecast",
          "TimeSeriesPlot.jpeg"), 
   width = 4800,
   height = 3600,
