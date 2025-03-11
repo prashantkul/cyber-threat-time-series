@@ -1700,7 +1700,7 @@ train_size <- floor(0.8 * length(complete_usa_spam_time_series)) + 2
 train_data <- ts(
   complete_usa_spam_time_series[1:train_size],
   start = c(as.numeric(format(min_date, "%Y")), as.numeric(format(min_date, "%j"))),
-  frequency = 365
+  frequency = 7 
 )
 train_data
 
@@ -1713,7 +1713,7 @@ test_data  <-
     as.numeric(format(
       complete_date[train_size + 1], "%j"
     ))),
-    frequency = 365
+    frequency = 7
   )
 test_data
 ```
@@ -1723,7 +1723,7 @@ na_imputed_train_data <-
   ts(
     na_imputed_complete_usa_spam_time_series[1:train_size],
     start = c(as.numeric(format(min_date, "%Y")), as.numeric(format(min_date, "%j"))),
-    frequency = 365
+    frequency = 7
   )
 na_imputed_train_data
 na_imputed_test_data  <-
@@ -1735,7 +1735,7 @@ na_imputed_test_data  <-
     as.numeric(format(
       complete_date[train_size + 1], "%j"
     ))),
-    frequency = 365
+    frequency = 7
   )
 na_imputed_test_data
 ```
@@ -1842,61 +1842,61 @@ Model Building
 
 Fit a ARIMA model on time series object without differencing or seasonal effect
 ```{r}
-arima_original <- auto.arima(train_data, seasonal = FALSE)
+arima_original <- auto.arima(train_data, seasonal = FALSE, lambda = 1.54)
 arima_original
 ```
 
 Fit a SARIMA model on time series object without differencing
 ```{r}
-sarima_original <- auto.arima(train_data)
+sarima_original <- auto.arima(train_data, lambda = 1.54)
 sarima_original
 ```
 
 Fit a ARIMA model on time series object with differencing but without seasonal effect
 ```{r}
-arima_original_diff <- auto.arima(train_data, seasonal = FALSE, d = 1)
+arima_original_diff <- auto.arima(train_data, seasonal = FALSE, d = 1, lambda = 1.54)
 arima_original_diff
 ```
 
 Fit a SARIMA model on time series object with differencing
 ```{r}
-sarima_original_diff <- auto.arima(train_data, d = 1)
+sarima_original_diff <- auto.arima(train_data, d = 1, lambda = 1.54)
 sarima_original_diff
 ```
 
 Fit a exponential smoothing state space model
 ```{r}
-ets_original <- ets(train_data)
+ets_original <- ets(train_data, lambda = 1.54)
 ets_original
 ```
 
 Fit a ARIMA model on time series object without differencing or seasonal effect
 ```{r}
-arima_na_imputed <- auto.arima(na_imputed_train_data, seasonal = FALSE)
+arima_na_imputed <- auto.arima(na_imputed_train_data, seasonal = FALSE, lambda = 1.38)
 arima_na_imputed
 ```
 
 Fit a SARIMA model on time series object without differencing
 ```{r}
-sarima_na_imputed <- auto.arima(na_imputed_train_data)
+sarima_na_imputed <- auto.arima(na_imputed_train_data, lambda = 1.38)
 sarima_na_imputed
 ```
 
 Fit a ARIMA model on time series object with differencing but without seasonal effect
 ```{r}
-arima_na_imputed_diff <- auto.arima(na_imputed_train_data, seasonal = FALSE, d = 1)
+arima_na_imputed_diff <- auto.arima(na_imputed_train_data, seasonal = FALSE, d = 1, lambda = 1.38)
 arima_na_imputed_diff
 ```
 
 Fit a SARIMA model on time series object with differencing
 ```{r}
-sarima_na_imputed_diff <- auto.arima(na_imputed_train_data, d = 1)
+sarima_na_imputed_diff <- auto.arima(na_imputed_train_data, d = 1, lambda = 1.38)
 sarima_na_imputed_diff
 ```
 
 Fit a exponential smoothing state space model
 ```{r}
-ets_na_imputed_train_data <- ets(na_imputed_train_data)
+ets_na_imputed_train_data <- ets(na_imputed_train_data, lambda = 1.38)
 ets_na_imputed_train_data
 ```
 
@@ -1943,7 +1943,7 @@ par(mar = c(10, 5, 5, 2)) # Increase the top margin to 6 lines
 complete_date <-
   sort(unique(complete_usa_spam_df$ConvertedAttackDate))
 
-plot(arima_na_imputed_diff_forecast,
+plot(sarima_na_imputed_diff_forecast,
   main = paste(
     "Daily Attack Percentage \nfor",
     "Spam",
@@ -2000,7 +2000,7 @@ par(mar = c(10, 5, 5, 2)) # Increase the top margin to 6 lines
 complete_date <-
   sort(unique(grouped_by_country_attack_row_added$ConvertedAttackDate))
 
-plot(arima_diff_forecast,
+plot(sarima_na_imputed_diff_forecast,
   main = paste(
     "Daily Attack Percentage \nfor",
     attack_type_specified,
@@ -2013,7 +2013,7 @@ plot(arima_diff_forecast,
 )
 
 # Add the second variable to the same plot
-lines(test_data, col = "red", lwd = 2)
+lines(na_imputed_test_data, col = "red", lwd = 2)
 
 # Allow plotting outside the plot area
 par(xpd = TRUE)
