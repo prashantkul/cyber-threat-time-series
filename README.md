@@ -1,5 +1,5 @@
 # cyber-threat-time-series
 
 ## main files
-- eda/eda.R
+- eda/final_project_eda.R
 - modeling/modeling.R
