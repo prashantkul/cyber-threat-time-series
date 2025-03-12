@@ -15,5 +15,23 @@ library(forecast)
 library(ggplot2)
 library(dplyr)
 library(corrplot)
-
+library(stats)  # for stl()
 setwd("/Users/prashantkulkarni/Documents/source-code/time-series/cyber-threat-time-series")
+
+library(zoo)
+library(forecast)
+# Install if not already installed
+install.packages("skimr")
+
+library(skimr)
+# Install if not already installed
+install.packages("summarytools")
+
+library(summarytools)
+install.packages("kableExtra")
+library(kableExtra)
+
+
+install.packages("prophet")
+library(prophet)
+

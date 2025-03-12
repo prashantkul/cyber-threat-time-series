@@ -103,6 +103,9 @@ remainder_local <- decomp_local_7$time.series[, "remainder"]
 # ACF plot
 Acf(remainder_local, main = "ACF of STL Remainder - Local Infection")
 
+# Draw PACF plot
+Pacf(remainder_local, main = "PACF of STL Remainder - Local Infection")
+
 Box.test(remainder_local, lag = 14, type = "Ljung-Box")
 
 hist(remainder_local, breaks = 30, main = "Histogram of STL Remainder")
@@ -203,7 +206,28 @@ ggplot(plot_all, aes(x = Date, y = Value, color = DataType)) +
   geom_line() +
   labs(title = "ARIMA Forecast vs. Actual",
        x = "Date", y = "Local Infection %") +
-  theme_minimal()
+  theme_bw()
 
 # Save the plot
 ggsave(filename = "output/plots/arima_forecast_vs_actual.png")
+
+# Remainder after fit_train
+residuals_train <- residuals(fit_train)
+
+
+
+checkresiduals(fit_train) 
+
+Box.test(residuals_train, lag = 14, type = "Ljung-Box")
+
+# Should we do 2nd order differencing?
+# Let's try it
+train_diff2 <- diff(train_ts, lag = 2)  # second difference
+fit_train_diff2 <- auto.arima(train_diff2, seasonal = TRUE)
+summary(fit_train_diff2)
+
+checkresiduals(fit_train_diff2)
+
+residuals_train_diff2 <- residuals(fit_train_diff2)
+
+Box.test(residuals_train_diff2, lag = 14, type = "Ljung-Box")

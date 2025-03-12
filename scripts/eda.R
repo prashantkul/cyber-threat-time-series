@@ -35,6 +35,48 @@ ggplot(cyber_data, aes(x = Spam)) +
 # Save the plot
 ggsave(filename = "output/plots/spam_histogram.png")
 
+# Plot a time series of Local Infection
+ggplot(cyber_data, aes(x = AttackDate, y = Local.Infection)) +
+  geom_line(color = "red") +
+  theme_minimal() +
+  labs(title = "Time Series of Local Infection Attacks", x = "Date", y = "Local Infection Percentage")
+
+
+# Plot distribution showing missing values
+missing_data <- cyber_data %>%
+  summarise_all(~sum(is.na(.))) %>%
+  gather(key = "Variable", value = "MissingCount")
+
+ggplot(missing_data, aes(x = Variable, y = MissingCount)) + 
+  geom_bar(stat = "identity", fill = "blue") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  labs(title = "Missing Data Distribution", x = "Variable", y = "Missing Count")
+
+# print counts of dataset
+print("Counts of dataset")
+nrow(cyber_data)
+# print counts and distribution of variables
+print("Counts and distribution of variables")
+summary(cyber_data)
+
+# Example: Summarize entire dataset
+skim(cyber_data)
+dfSummary(cyber_data)
+
+# Suppose you have a small summary data frame
+my_summary <- data.frame(
+  AttackType = c("Spam", "Ransomware", "Local.Infection"),
+  Mean = c(mean(cyber_data$Spam, na.rm = TRUE),
+           mean(cyber_data$Ransomware, na.rm = TRUE),
+           mean(cyber_data$Local.Infection, na.rm = TRUE))
+)
+
+my_summary %>%
+  kbl(caption = "Summary of Selected Attack Types") %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed"))
+
+
 ############################################################################################################
 # NA's replacement and Time Series Plot
 ############################################################################################################
@@ -227,9 +269,13 @@ ggplot(top_static_spam, aes(x = AttackDate, y = SpamAvg)) +
   theme_minimal()
 
 
+# Save the plot
+ggsave(filename = "output/plots/average_spam_over_time.png")
 
 
-
+# Does this show any seasonal pattern of the spam attacks?
+print("Does this show any seasonal pattern of the spam attacks?")
+# Decompose the time series
 
 
 
