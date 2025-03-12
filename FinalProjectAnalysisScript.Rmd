@@ -1928,8 +1928,15 @@ sarima_na_imputed_diff_forecast <- forecast(sarima_na_imputed_diff, h = length(n
 sarima_na_imputed_diff_forecast
 ```
 
+
 ```{r}
-ets_na_imputed_forecast <- forecast(ets_na_imputed, h = length(na_imputed_test_data))
+sarima_na_imputed_forecast <- forecast(sarima_na_imputed, h = length(na_imputed_test_data))
+sarima_na_imputed_forecast
+```
+
+
+```{r}
+ets_na_imputed_forecast <- forecast(ets_na_imputed_train_data, h = length(na_imputed_test_data))
 ets_na_imputed_forecast
 ```
 
@@ -1998,15 +2005,15 @@ Plot out the forecast together with existing test set
 par(mar = c(10, 5, 5, 2)) # Increase the top margin to 6 lines
 
 complete_date <-
-  sort(unique(grouped_by_country_attack_row_added$ConvertedAttackDate))
+  sort(unique(complete_usa_spam_df$ConvertedAttackDate))
 
 plot(sarima_na_imputed_diff_forecast,
   main = paste(
     "Daily Attack Percentage \nfor",
-    attack_type_specified,
-    "\nAcross Countries"
+    "Spam",
+    "\nin United States of America"
   ),
-  ylab = "Average Attack Percentage",
+  ylab = "Attack Percentage",
   xlab = "",
   type = "l",
   xaxt = "n"
@@ -2145,6 +2152,14 @@ jarque.bera.test(arima_na_imputed_diff$residuals)
 
 #### Accuracy
 
+```{r}
+summary(arima_na_imputed_diff)
+```
+
+```{r}
+accuracy(arima_na_imputed_diff_forecast)
+```
+
 -----
 
 ### 5. Conclusion and Future work: Summarize your work and draw specific conclusions from the overall final project. Describe next steps to continue working on this project. (i.e., how the model forecasting can be improved)
@@ -2155,5 +2170,5 @@ jarque.bera.test(arima_na_imputed_diff$residuals)
 
 Cleanup the variables that are defined in the environment
 ```{r}
-rm(list = ls())
+# rm(list = ls())
 ```
